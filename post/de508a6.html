@@ -1,0 +1,286 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>STM32学习之GPIO | Leostar</title><meta name="author" content="Leostar"><meta name="copyright" content="Leostar"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="STM32单片机——GPIO外设使用模块化编程与板级支持包的想法进行GPIO相关外设的构建 GPIO口配置步骤GPIO口的初始化在Drivers驱动中有stm32 hal库的相关文件，我们可以找到stm32f1xx_hal_gpio.c文件，查找初始化各个GPIO口的方法 1234567891011&#x2F;&#x2F;__HAL_RCC_GPIOx_CLK_ENABLE();使能对应端口 x可以替换为各个GPIO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32学习之GPIO">
+<meta property="og:url" content="https://lleostar.github.io/post/de508a6.html">
+<meta property="og:site_name" content="Leostar">
+<meta property="og:description" content="STM32单片机——GPIO外设使用模块化编程与板级支持包的想法进行GPIO相关外设的构建 GPIO口配置步骤GPIO口的初始化在Drivers驱动中有stm32 hal库的相关文件，我们可以找到stm32f1xx_hal_gpio.c文件，查找初始化各个GPIO口的方法 1234567891011&#x2F;&#x2F;__HAL_RCC_GPIOx_CLK_ENABLE();使能对应端口 x可以替换为各个GPIO">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lleostar.github.io/img/hutao01.png">
+<meta property="article:published_time" content="2023-03-01T14:37:12.000Z">
+<meta property="article:modified_time" content="2023-03-01T14:40:07.153Z">
+<meta property="article:author" content="Leostar">
+<meta property="article:tag" content="单片机">
+<meta property="article:tag" content="STM32">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lleostar.github.io/img/hutao01.png"><link rel="shortcut icon" href="/img/%E6%88%91%E7%9A%84%E4%B8%BD.jpg"><link rel="canonical" href="https://lleostar.github.io/post/de508a6"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'STM32学习之GPIO',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-01 22:40:07'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E7%9C%9F%E5%97%A3.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/./img/hutao01.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Leostar</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">STM32学习之GPIO</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-01T14:37:12.000Z" title="发表于 2023-03-01 22:37:12">2023-03-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-01T14:40:07.153Z" title="更新于 2023-03-01 22:40:07">2023-03-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0/">嵌入式学习</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="STM32单片机——GPIO外设"><a href="#STM32单片机——GPIO外设" class="headerlink" title="STM32单片机——GPIO外设"></a>STM32单片机——GPIO外设</h1><p>使用模块化编程与板级支持包的想法进行GPIO相关外设的构建</p>
+<h2 id="GPIO口配置步骤"><a href="#GPIO口配置步骤" class="headerlink" title="GPIO口配置步骤"></a>GPIO口配置步骤</h2><h3 id="GPIO口的初始化"><a href="#GPIO口的初始化" class="headerlink" title="GPIO口的初始化"></a>GPIO口的初始化</h3><p>在Drivers驱动中有stm32 hal库的相关文件，我们可以找到stm32f1xx_hal_gpio.c文件，查找初始化各个GPIO口的方法</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//__HAL_RCC_GPIOx_CLK_ENABLE();使能对应端口 x可以替换为各个GPIO口</span></span><br><span class="line"><span class="comment">//例如 如果我想要初始化GPIOA口有关设备，配置的时候我就应该先</span></span><br><span class="line">__HAL_RCC_GPIOA_CLK_ENABLE();</span><br><span class="line">GPIO_InitTypeDef GPIO_Init; <span class="comment">//创建一个GPIO_InitTypeDef结构体对象，用来存放相应配置</span></span><br><span class="line">GPIO_Init.Pin = ;</span><br><span class="line">GPIO_Init.Mode = ;</span><br><span class="line">GPIO_Init.Pull = ;</span><br><span class="line">GPIO_Init.Speed = ;</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置完成端口以后，就使用函数</span></span><br><span class="line">HAL_GPIO_Init(GPIOA,&amp;GPIO_Init);<span class="comment">//使用GPIO_Init的数据配置GPIOA端口</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">GPIO_Init.Pin</th>
+<th align="center">GPIO_PIN_k（k∈[0,15]）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">激活引脚号</td>
+<td align="center">引脚编号</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">GPIO.Init.Mode</th>
+<th align="center">GPIO_MODE_INPUT</th>
+<th align="center">GPIO_MODE_OUTPUT_PP</th>
+<th align="center">GPIO_MODE_OUTPUT_OD</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">模式</td>
+<td align="center">输入模式</td>
+<td align="center">推挽输出</td>
+<td align="center">开漏输出</td>
+</tr>
+<tr>
+<td align="center">调控端口模式</td>
+<td align="center">从引脚读取数据</td>
+<td align="center">推挽输出的方式输出，控制一般外设用这个</td>
+<td align="center">开漏输出的方式输出，一般用于通信协议中?</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>GPIO_Init.Speed</th>
+<th>GPIO_SPEED_FREQ_LOW</th>
+<th>GPIO_SPEED_FREQ_MEDIUM</th>
+<th>GPIO_SPEED_FREQ_HIGH</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>模式</td>
+<td>低速</td>
+<td>中速</td>
+<td>高速</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>GPIO_Init.Pull</th>
+<th>GPIO_NOPULL</th>
+<th>GPIO_PULLUP</th>
+<th>GPIO_PULLDOWN</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>模式</td>
+<td>无上下拉</td>
+<td>有上拉</td>
+<td>有下拉</td>
+</tr>
+<tr>
+<td>功能说明（用于输入模式时）</td>
+<td>没有输入时，电平处于不稳定状态</td>
+<td>没有输入时，处于高电平状态</td>
+<td>没有输入时，处于低电平状态</td>
+</tr>
+</tbody></table>
+<h3 id="GPIO口的读取"><a href="#GPIO口的读取" class="headerlink" title="GPIO口的读取"></a>GPIO口的读取</h3><blockquote>
+<p>To get the level of a pin configured in input mode use HAL_GPIO_ReadPin().</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用函数</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @brief  Reads the specified input port pin.</span></span><br><span class="line"><span class="comment">  * @param  GPIOx: where x can be (A..G depending on device used) to select the GPIO peripheral</span></span><br><span class="line"><span class="comment">  * @param  GPIO_Pin: specifies the port bit to read.</span></span><br><span class="line"><span class="comment">  *         This parameter can be GPIO_PIN_x where x can be (0..15).</span></span><br><span class="line"><span class="comment">  * @retval The input port pin value.</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">HAL_GPIO_ReadPin(GPIOx,GPIO_Pin_x);<span class="comment">//GPIOx，x可取ABCD等端口字母,GPIO_Pin_x x可取</span></span><br><span class="line"><span class="comment">//具体端口编号</span></span><br></pre></td></tr></table></figure>
+
+<p>可以使用上述函数，读取调用此函数时对应引脚的电平状态</p>
+<h3 id="GPIO口写入"><a href="#GPIO口写入" class="headerlink" title="GPIO口写入"></a>GPIO口写入</h3><blockquote>
+<p>To set&#x2F;reset the level of a pin configured in output mode use<br> HAL_GPIO_WritePin()&#x2F;HAL_GPIO_TogglePin().</p>
+<p>可以使用上述两个函数给处于输出状态的端口写入值</p>
+</blockquote>
+<h4 id="方法一：写具体状态"><a href="#方法一：写具体状态" class="headerlink" title="方法一：写具体状态"></a>方法一：写具体状态</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HAL_GPIO_WritePin</span><span class="params">(引脚字母GPIOx,引脚编号GPIO_PIN_x, 电平状态(GPIO_SET or GPIO_RESET))</span></span><br></pre></td></tr></table></figure>
+
+<p>GPIO_PinState 可以取</p>
+<ol>
+<li><p>GPIO_RESET &#x3D; 0 (低电平)</p>
+</li>
+<li><p>GPIO_SET &#x3D; 1 (高电平)</p>
+</li>
+</ol>
+<h4 id="方法二：反转电平状态"><a href="#方法二：反转电平状态" class="headerlink" title="方法二：反转电平状态"></a>方法二：反转电平状态</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_12) <span class="comment">//以A12口为例，翻转A12口电平状态</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="构建板级支持包"><a href="#构建板级支持包" class="headerlink" title="构建板级支持包"></a>构建板级支持包</h2><p>可以通过在工程存放的文件夹下，创建一个User的空间，用于存放各种外设。</p>
+<p>用各个外设的名字来命名User的子文件夹，在子文件夹中存放.c and .h文件</p>
+<p><strong>记住：要将文件夹所在目录添加到#include配置中，然后可以用相对路径法索引.h文件</strong></p>
+<p><strong>要把.c文件添加到工程（中的组——方便管理）中！！否则无法编译</strong></p>
+<h2 id="第一个外设：二极管点亮"><a href="#第一个外设：二极管点亮" class="headerlink" title="第一个外设：二极管点亮"></a>第一个外设：二极管点亮</h2><h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>引脚长的那一端接高电平，引脚短的那一端 接到低电平时，二极管会被点亮</p>
+<h3 id="二极管控制代码"><a href="#二极管控制代码" class="headerlink" title="二极管控制代码"></a>二极管控制代码</h3><blockquote>
+<p>LED_GPIO.h文件</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __LED_GPIO_H_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __LED_GPIO_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stm32f1xx_hal.h&quot;</span> <span class="comment">//每个板级支持包文件都要先include hal库头文件</span></span></span><br><span class="line"><span class="comment">//通过define 将函数操作与字符等同，更方便 ，注意：define放在.h文件而不是.c文件</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LED_R_ON  do&#123;HAL_GPIO_WritePin(GPIOA,GPIO_PIN_1,GPIO_PIN_RESET);&#125;while(0) </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LED_R_OFF do&#123;HAL_GPIO_WritePin(GPIOA,GPIO_PIN_1,GPIO_PIN_SET);&#125;while(0)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LED_R_CHANGE do&#123;HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_1);&#125;while(0)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LED_B_ON  do&#123;HAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_RESET);&#125;while(0) </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LED_B_OFF do&#123;HAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_SET);&#125;while(0)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LED_B_CHANGE do&#123;HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_3);&#125;while(0)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LED_G_ON  do&#123;HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_RESET);&#125;while(0) </span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LED_G_OFF do&#123;HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_SET);&#125;while(0)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LED_G_CHANGE do&#123;HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_4);&#125;while(0)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//在头文件中声明函数先，然后在别的.c文件下编写函数具体内容，具体</span></span><br><span class="line"><span class="comment">//存放这个函数体的.c文件叫啥无所谓，只要那个.c文件#include 了这个.h文件</span></span><br><span class="line"><span class="comment">//编译器就知道，你这个.c函数里面放的就是.h文件里面声明的这个玩意，最后编译放在一起</span></span><br><span class="line"><span class="comment">//main函数只要也#include 了这个.h文件，就也能使用编译出来的</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">LED_INIT</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//记得要留一行出来</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>LED_GPIO.c文件</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;./LED/LED_GPIO.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">LED_INIT</span><span class="params">(<span class="type">void</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//初始化时钟</span></span><br><span class="line">    __HAL_RCC_GPIOA_CLK_ENABLE();</span><br><span class="line">    GPIO_InitTypeDef GPIO_Init;</span><br><span class="line">    GPIO_Init.Pin = GPIO_PIN_1 | GPIO_PIN_3 |GPIO_PIN_4;</span><br><span class="line">    GPIO_Init.Mode = GPIO_MODE_OUTPUT_PP;</span><br><span class="line">    GPIO_Init.Pull= GPIO_NOPULL;</span><br><span class="line">    GPIO_Init.Speed = GPIO_SPEED_FREQ_LOW;</span><br><span class="line">    HAL_GPIO_Init(GPIOA,&amp;GPIO_Init);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样，我们在使用各种外设的时候就可以直接使用，而不需要</p>
+<h2 id="第二个外设：蜂鸣器"><a href="#第二个外设：蜂鸣器" class="headerlink" title="第二个外设：蜂鸣器"></a>第二个外设：蜂鸣器</h2><h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><p>在给I&#x2F;O口低电平的时候，蜂鸣器会响起</p>
+<h3 id="蜂鸣器控制"><a href="#蜂鸣器控制" class="headerlink" title="蜂鸣器控制"></a>蜂鸣器控制</h3><blockquote>
+<p>bee.h文件</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __BEE_H_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __BEE_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stm32f1xx_hal.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">BEE_GPIO_INIT</span><span class="params">(<span class="type">void</span>)</span>; <span class="comment">//初始化控制蜂鸣器的端口</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">BEE_CHANGE</span><span class="params">(<span class="type">void</span>)</span>; <span class="comment">// 改变蜂鸣器端口的状态</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>bee.c文件</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;./BEE/bee.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">BEE_GPIO_INIT</span><span class="params">(<span class="type">void</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//初始化时钟</span></span><br><span class="line">    __HAL_RCC_GPIOB_CLK_ENABLE();</span><br><span class="line">    GPIO_InitTypeDef GPIO_Init;</span><br><span class="line">    GPIO_Init.Pin = GPIO_PIN_12;</span><br><span class="line">    GPIO_Init.Mode = GPIO_MODE_OUTPUT_PP;</span><br><span class="line">    GPIO_Init.Pull= GPIO_NOPULL;</span><br><span class="line">    GPIO_Init.Speed = GPIO_SPEED_FREQ_LOW;</span><br><span class="line">    HAL_GPIO_Init(GPIOB,&amp;GPIO_Init);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> <span class="title function_">BEE_CHANGE</span><span class="params">(<span class="type">void</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">    HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_12);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="第三个外设：按键"><a href="#第三个外设：按键" class="headerlink" title="第三个外设：按键"></a>第三个外设：按键</h2><h3 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h3><p>按键按下的时候会有抖动，由于连接方式，我们选择了将GND与端口相连，因此我们需要配置上拉输入模式，用来保持没有按下的时候读取的值为高电平，按下了之后读取的是低电平</p>
+<p><strong>每次检测到电平变化时（按下or松开导致的）时,需要Delay()一下，消除抖动</strong></p>
+<p>实质上：我在检测到电平变化的时候<strong>已经能够确定哪个按键被按下或者松开了</strong>，我还要delay而不是马上进行操作的原因就是防止按键带来的抖动对系统会造成的潜在影响，所以别急，先delay一下，也耽误不了多少时间</p>
+<h3 id="按键控制"><a href="#按键控制" class="headerlink" title="按键控制"></a>按键控制</h3><blockquote>
+<p>key.h</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __KEY_H_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __KEY_H_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stm32f1xx_hal.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">KEY_GPIO_INIT</span><span class="params">(<span class="type">void</span>)</span>; <span class="comment">//按键（对应端口）初始化</span></span><br><span class="line"><span class="type">uint8_t</span> <span class="title function_">KEY_READ</span><span class="params">(<span class="type">void</span>)</span>; <span class="comment">//读取哪个按键被按下</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>key.c</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;./KEY/key.h&quot;</span>  <span class="comment">//包含.h文件</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">KEY_GPIO_INIT</span><span class="params">(<span class="type">void</span>)</span>&#123; </span><br><span class="line">    <span class="comment">//使能时钟</span></span><br><span class="line">    __HAL_RCC_GPIOB_CLK_ENABLE();</span><br><span class="line">    <span class="comment">//创建结构体</span></span><br><span class="line">    GPIO_InitTypeDef KEY_GPIO_Init;</span><br><span class="line">    KEY_GPIO_Init.Mode = GPIO_MODE_INPUT; <span class="comment">//设置为输入模式</span></span><br><span class="line">    KEY_GPIO_Init.Pin = GPIO_PIN_0 | GPIO_PIN_1;</span><br><span class="line">    KEY_GPIO_Init.Pull = GPIO_PULLUP; <span class="comment">//设置为上拉输入模式</span></span><br><span class="line">    KEY_GPIO_Init.Speed = GPIO_SPEED_FREQ_LOW;</span><br><span class="line">    <span class="comment">//初始化</span></span><br><span class="line">    HAL_GPIO_Init(GPIOB,&amp;KEY_GPIO_Init);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** @brief 用于读取返回特定按键的值</span></span><br><span class="line"><span class="comment">* @parm  i:按键编号</span></span><br><span class="line"><span class="comment">* @retval GPIO_PinState</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">uint8_t</span> <span class="title function_">KEY_READ</span><span class="params">(<span class="type">void</span>)</span>&#123; <span class="comment">//检测两个按键中哪个被按下或者都没有被按下</span></span><br><span class="line">    <span class="keyword">if</span> (HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_0)==GPIO_PIN_RESET)&#123;</span><br><span class="line">        HAL_Delay(<span class="number">20</span>); <span class="comment">//消除按下抖动</span></span><br><span class="line">        <span class="keyword">while</span>(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_0)==GPIO_PIN_RESET); <span class="comment">//不操作 直到按钮松开</span></span><br><span class="line">        HAL_Delay(<span class="number">20</span>); <span class="comment">//消除松手抖动 </span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_1)==GPIO_PIN_RESET)&#123;</span><br><span class="line">        HAL_Delay(<span class="number">20</span>); <span class="comment">//消除按下抖动</span></span><br><span class="line">        <span class="keyword">while</span>(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_1)==GPIO_PIN_RESET); <span class="comment">//不操作 直到按钮松开</span></span><br><span class="line">        HAL_Delay(<span class="number">20</span>); <span class="comment">//消除松手抖动 </span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lleostar.github.io">Leostar</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lleostar.github.io/post/de508a6.html">https://lleostar.github.io/post/de508a6.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lleostar.github.io" target="_blank">Leostar</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a><a class="post-meta__tags" href="/tags/STM32/">STM32</a></div><div class="post_share"><div class="social-share" data-image="/./img/hutao01.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/post/2f4cbc2b.html"><img class="next-cover" src="/img/%E7%9C%9F%E5%97%A3.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">高中化学学习经验分享</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E7%9C%9F%E5%97%A3.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Leostar</div><div class="author-info__description">Leostar</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/lleostar"><i class="fab fa-github"></i><span>看看need</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">Hello 我是Leo 欢迎来到我的网站~ 点进文章后右下角的小标可以切换阅读模式哦</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#STM32%E5%8D%95%E7%89%87%E6%9C%BA%E2%80%94%E2%80%94GPIO%E5%A4%96%E8%AE%BE"><span class="toc-number">1.</span> <span class="toc-text">STM32单片机——GPIO外设</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GPIO%E5%8F%A3%E9%85%8D%E7%BD%AE%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.1.</span> <span class="toc-text">GPIO口配置步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GPIO%E5%8F%A3%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.1.1.</span> <span class="toc-text">GPIO口的初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GPIO%E5%8F%A3%E7%9A%84%E8%AF%BB%E5%8F%96"><span class="toc-number">1.1.2.</span> <span class="toc-text">GPIO口的读取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GPIO%E5%8F%A3%E5%86%99%E5%85%A5"><span class="toc-number">1.1.3.</span> <span class="toc-text">GPIO口写入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E5%86%99%E5%85%B7%E4%BD%93%E7%8A%B6%E6%80%81"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">方法一：写具体状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E5%8F%8D%E8%BD%AC%E7%94%B5%E5%B9%B3%E7%8A%B6%E6%80%81"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">方法二：反转电平状态</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E6%9D%BF%E7%BA%A7%E6%94%AF%E6%8C%81%E5%8C%85"><span class="toc-number">1.2.</span> <span class="toc-text">构建板级支持包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%A4%96%E8%AE%BE%EF%BC%9A%E4%BA%8C%E6%9E%81%E7%AE%A1%E7%82%B9%E4%BA%AE"><span class="toc-number">1.3.</span> <span class="toc-text">第一个外设：二极管点亮</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-number">1.3.1.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E6%9E%81%E7%AE%A1%E6%8E%A7%E5%88%B6%E4%BB%A3%E7%A0%81"><span class="toc-number">1.3.2.</span> <span class="toc-text">二极管控制代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%A4%96%E8%AE%BE%EF%BC%9A%E8%9C%82%E9%B8%A3%E5%99%A8"><span class="toc-number">1.4.</span> <span class="toc-text">第二个外设：蜂鸣器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E7%82%B9-1"><span class="toc-number">1.4.1.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%9C%82%E9%B8%A3%E5%99%A8%E6%8E%A7%E5%88%B6"><span class="toc-number">1.4.2.</span> <span class="toc-text">蜂鸣器控制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%A4%96%E8%AE%BE%EF%BC%9A%E6%8C%89%E9%94%AE"><span class="toc-number">1.5.</span> <span class="toc-text">第三个外设：按键</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E7%82%B9-2"><span class="toc-number">1.5.1.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E9%94%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">1.5.2.</span> <span class="toc-text">按键控制</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/de508a6.html" title="STM32学习之GPIO"><img src="/./img/hutao01.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="STM32学习之GPIO"/></a><div class="content"><a class="title" href="/post/de508a6.html" title="STM32学习之GPIO">STM32学习之GPIO</a><time datetime="2023-03-01T14:37:12.000Z" title="发表于 2023-03-01 22:37:12">2023-03-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/2f4cbc2b.html" title="高中化学学习经验分享"><img src="/img/%E7%9C%9F%E5%97%A3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="高中化学学习经验分享"/></a><div class="content"><a class="title" href="/post/2f4cbc2b.html" title="高中化学学习经验分享">高中化学学习经验分享</a><time datetime="2022-11-17T03:12:40.000Z" title="发表于 2022-11-17 11:12:40">2022-11-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/fcb2be40.html" title="Leetcode学习01"><img src="/img/hutao01.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Leetcode学习01"/></a><div class="content"><a class="title" href="/post/fcb2be40.html" title="Leetcode学习01">Leetcode学习01</a><time datetime="2022-11-15T13:54:39.000Z" title="发表于 2022-11-15 21:54:39">2022-11-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/2a4a8916.html" title="Hexo使用过程中常见问题汇总"><img src="/img/%E9%87%8F%E4%BA%A7%E6%9C%BA.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo使用过程中常见问题汇总"/></a><div class="content"><a class="title" href="/post/2a4a8916.html" title="Hexo使用过程中常见问题汇总">Hexo使用过程中常见问题汇总</a><time datetime="2022-11-14T06:52:18.000Z" title="发表于 2022-11-14 14:52:18">2022-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/d87f7e0c.html" title="图片插入测试"><img src="/img/%E5%88%9D%E5%8F%B7%E6%9C%BA.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="图片插入测试"/></a><div class="content"><a class="title" href="/post/d87f7e0c.html" title="图片插入测试">图片插入测试</a><time datetime="2022-11-13T03:18:08.000Z" title="发表于 2022-11-13 11:18:08">2022-11-13</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/./img/hutao01.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Leostar</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script></div></body></html>
