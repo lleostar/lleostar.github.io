@@ -1,0 +1,355 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Numpy常见使用 | Leostar</title><meta name="author" content="Leostar"><meta name="copyright" content="Leostar"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1import numpy as np  导入numpy模块 创建数组序列的方法12345678910import numpy as npa0 &#x3D;  np.array([[1,100],[20,3]]) #将list转换为arrayprint(a0)a&#x3D;np.arange(start&#x3D;1,stop&#x3D;10,step&#x3D;2,dtype &#x3D; float)print(a)b&#x3D;np.linspace(1,13">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Numpy常见使用">
+<meta property="og:url" content="https://lleostar.github.io/post/ffca95d9.html">
+<meta property="og:site_name" content="Leostar">
+<meta property="og:description" content="1import numpy as np  导入numpy模块 创建数组序列的方法12345678910import numpy as npa0 &#x3D;  np.array([[1,100],[20,3]]) #将list转换为arrayprint(a0)a&#x3D;np.arange(start&#x3D;1,stop&#x3D;10,step&#x3D;2,dtype &#x3D; float)print(a)b&#x3D;np.linspace(1,13">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lleostar.github.io/img/%E5%B8%85%E6%B0%94%E5%9B%BE%E7%89%87.jpg">
+<meta property="article:published_time" content="2023-03-02T14:21:53.000Z">
+<meta property="article:modified_time" content="2023-03-02T14:28:29.215Z">
+<meta property="article:author" content="Leostar">
+<meta property="article:tag" content="数学建模">
+<meta property="article:tag" content="Python常用库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lleostar.github.io/img/%E5%B8%85%E6%B0%94%E5%9B%BE%E7%89%87.jpg"><link rel="shortcut icon" href="/img/%E6%88%91%E7%9A%84%E4%B8%BD.jpg"><link rel="canonical" href="https://lleostar.github.io/post/ffca95d9"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Numpy常见使用',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-02 22:28:29'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/%E7%9C%9F%E5%97%A3.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/%E5%B8%85%E6%B0%94%E5%9B%BE%E7%89%87.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Leostar</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Numpy常见使用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-02T14:21:53.000Z" title="发表于 2023-03-02 22:21:53">2023-03-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-02T14:28:29.215Z" title="更新于 2023-03-02 22:28:29">2023-03-02</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id><a href="#" class="headerlink" title></a></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+
+<p>导入numpy模块</p>
+<h1 id="创建数组序列的方法"><a href="#创建数组序列的方法" class="headerlink" title="创建数组序列的方法"></a>创建数组序列的方法</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a0 =  np.array([[<span class="number">1</span>,<span class="number">100</span>],[<span class="number">20</span>,<span class="number">3</span>]]) <span class="comment">#将list转换为array</span></span><br><span class="line"><span class="built_in">print</span>(a0)</span><br><span class="line">a=np.arange(start=<span class="number">1</span>,stop=<span class="number">10</span>,step=<span class="number">2</span>,dtype = <span class="built_in">float</span>)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line">b=np.linspace(<span class="number">1</span>,<span class="number">13</span>,num=<span class="number">20</span>,endpoint = <span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(b)</span><br><span class="line">c=np.logspace(<span class="number">1</span>,<span class="number">10</span>,num = <span class="number">10</span>,endpoint = <span class="literal">True</span>,base = <span class="number">10</span>)</span><br><span class="line"><span class="built_in">print</span>(c)</span><br></pre></td></tr></table></figure>
+
+<pre><code>[[  1 100]
+ [ 20   3]]
+[1. 3. 5. 7. 9.]
+[ 1.          1.63157895  2.26315789  2.89473684  3.52631579  4.15789474
+  4.78947368  5.42105263  6.05263158  6.68421053  7.31578947  7.94736842
+  8.57894737  9.21052632  9.84210526 10.47368421 11.10526316 11.73684211
+ 12.36842105 13.        ]
+[1.e+01 1.e+02 1.e+03 1.e+04 1.e+05 1.e+06 1.e+07 1.e+08 1.e+09 1.e+10]
+</code></pre>
+<p>arrange(strat,stop,step,dtype) 用于创建一个ndarray数组<br>linspace(strat,stop,num,endpoint&#x3D;True) 用于创建一个有num个数的在[strat,stop]范围内的等间距序列，endpoint&#x3D;True时，结果的最后一个点会被包括进去<br>lospace(start,stop,num,endpoint&#x3D;True,base&#x3D;10) $[base^{start},base^{stop}]范围内找到num个形成等比数组$</p>
+<h1 id="对数组大小修改，修改数组元素与切片"><a href="#对数组大小修改，修改数组元素与切片" class="headerlink" title="对数组大小修改，修改数组元素与切片"></a>对数组大小修改，修改数组元素与切片</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.arange(<span class="number">16</span>).reshape(<span class="number">4</span>,<span class="number">4</span>) <span class="comment">#修改数组的大小</span></span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line">b = a[<span class="number">2</span>:<span class="number">4</span>,<span class="number">2</span>:<span class="number">4</span>]  <span class="comment">#是同一块空间</span></span><br><span class="line"><span class="built_in">print</span>(b)</span><br><span class="line">b[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">100</span></span><br><span class="line"><span class="built_in">print</span>(b)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"></span><br><span class="line">a1 = a</span><br><span class="line">c = a.copy()  <span class="comment">#用copy才可以防止操作到a的内容</span></span><br><span class="line">c[<span class="number">0</span>,<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(c)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"></span><br><span class="line">a1[<span class="number">0</span>,<span class="number">0</span>]  = <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"><span class="built_in">print</span>(a1)</span><br></pre></td></tr></table></figure>
+
+<pre><code>[[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]
+ [12 13 14 15]]
+[[10 11]
+ [14 15]]
+[[100  11]
+ [ 14  15]]
+[[  0   1   2   3]
+ [  4   5   6   7]
+ [  8   9 100  11]
+ [ 12  13  14  15]]
+[[  1   1   2   3]
+ [  4   5   6   7]
+ [  8   9 100  11]
+ [ 12  13  14  15]]
+[[  0   1   2   3]
+ [  4   5   6   7]
+ [  8   9 100  11]
+ [ 12  13  14  15]]
+[[  1   1   2   3]
+ [  4   5   6   7]
+ [  8   9 100  11]
+ [ 12  13  14  15]]
+[[  1   1   2   3]
+ [  4   5   6   7]
+ [  8   9 100  11]
+ [ 12  13  14  15]]
+</code></pre>
+<p>使用reshape方法可以重新修改数组的大小<br>数组可以切片<br>但是切片之后得到的对象还是原来数组对应的空间，如果不想对原数据进行操作的话，也要进行一个copy</p>
+<h1 id="创建特殊的数组的方法"><a href="#创建特殊的数组的方法" class="headerlink" title="创建特殊的数组的方法"></a>创建特殊的数组的方法</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.ones((<span class="number">4</span>,<span class="number">3</span>),dtype = <span class="built_in">float</span>) <span class="comment">#使用ones生成全是1的，可以用dtype指定数组的数据类型 注意 np.ones(4) == np.ones((4,))</span></span><br><span class="line">b = np.zeros((<span class="number">4</span>,<span class="number">3</span>),dtype = <span class="built_in">float</span>)</span><br><span class="line">c = np.empty(<span class="number">3</span>) <span class="comment">#生成有大小的空数组</span></span><br><span class="line">d = np.eye(<span class="number">3</span>) <span class="comment">#生成 n阶单位阵</span></span><br><span class="line">e = np.eye(<span class="number">3</span>,k = <span class="number">1</span>) <span class="comment">#k用来指定哪一条对角线 k∈[-(n-1),n-1],上面的是正 ，下面的是负 ，中间是0</span></span><br><span class="line">f = np.zeros_like(a) <span class="comment">#生成和a一样大小的0阵</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;a = \n<span class="subst">&#123;a&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;b = \n<span class="subst">&#123;b&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;c = \n<span class="subst">&#123;c&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;d = \n<span class="subst">&#123;d&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;e = \n<span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;f = \n<span class="subst">&#123;f&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>a = 
+[[1. 1. 1.]
+ [1. 1. 1.]
+ [1. 1. 1.]
+ [1. 1. 1.]]
+b = 
+[[0. 0. 0.]
+ [0. 0. 0.]
+ [0. 0. 0.]
+ [0. 0. 0.]]
+c = 
+[1. 1. 1.]
+d = 
+[[1. 0. 0.]
+ [0. 1. 0.]
+ [0. 0. 1.]]
+e = 
+[[0. 1. 0.]
+ [0. 0. 1.]
+ [0. 0. 0.]]
+f = 
+[[0. 0. 0.]
+ [0. 0. 0.]
+ [0. 0. 0.]
+ [0. 0. 0.]]
+</code></pre>
+<h1 id="矩阵合并与分割"><a href="#矩阵合并与分割" class="headerlink" title="矩阵合并与分割"></a>矩阵合并与分割</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.arange(<span class="number">16</span>).reshape(<span class="number">4</span>,<span class="number">4</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;a = \n<span class="subst">&#123;a&#125;</span>&quot;</span>)</span><br><span class="line">b1 = <span class="number">5</span>*np.random.random((<span class="number">2</span>,<span class="number">4</span>)) <span class="comment">#用于random一个矩阵出来</span></span><br><span class="line">b2 = np.floor(b1) <span class="comment">#向下取整</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;b1 =\n<span class="subst">&#123;b1&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;b2 =\n<span class="subst">&#123;b2&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">c1 = <span class="number">6</span>*np.random.random((<span class="number">4</span>,<span class="number">2</span>))</span><br><span class="line">c2 = np.ceil(c1) <span class="comment">#向上取整 </span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;c1 = \n<span class="subst">&#123;c1&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;c2 = \n<span class="subst">&#123;c2&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">d1 = np.vstack([a,b1]) <span class="comment">#上下合并</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;d1 = \n <span class="subst">&#123;d1&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">d2 = np.hstack([a,c1]) <span class="comment">#左右合并</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;d2 = \n<span class="subst">&#123;d2&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>a = 
+[[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]
+ [12 13 14 15]]
+b1 =
+[[2.14777241 2.15394632 1.58349984 0.16490097]
+ [1.46675274 0.43018034 3.77262286 3.63291719]]
+b2 =
+[[2. 2. 1. 0.]
+ [1. 0. 3. 3.]]
+c1 = 
+[[2.37532468 0.04491147]
+ [0.44639029 2.00104121]
+ [3.4275526  0.80855631]
+ [0.75634035 3.02794756]]
+c2 = 
+[[3. 1.]
+ [1. 3.]
+ [4. 1.]
+ [1. 4.]]
+d1 = 
+ [[ 0.          1.          2.          3.        ]
+ [ 4.          5.          6.          7.        ]
+ [ 8.          9.         10.         11.        ]
+ [12.         13.         14.         15.        ]
+ [ 2.14777241  2.15394632  1.58349984  0.16490097]
+ [ 1.46675274  0.43018034  3.77262286  3.63291719]]
+d2 = 
+[[ 0.          1.          2.          3.          2.37532468  0.04491147]
+ [ 4.          5.          6.          7.          0.44639029  2.00104121]
+ [ 8.          9.         10.         11.          3.4275526   0.80855631]
+ [12.         13.         14.         15.          0.75634035  3.02794756]]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a=np.arange(<span class="number">16</span>).reshape(<span class="number">4</span>,<span class="number">4</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;a = \n<span class="subst">&#123;a&#125;</span>&quot;</span>)</span><br><span class="line">b=np.vsplit(a,<span class="number">2</span>) <span class="comment">#行分割 ，按行割开 均分成两列 ，如果不能均分就会报错！</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;b = \n<span class="subst">&#123;b&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;----b[0] = ----\n<span class="subst">&#123;b[<span class="number">0</span>]&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;-----b[1] = ----\n<span class="subst">&#123;b[<span class="number">1</span>]&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">c = np.hsplit(a,<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;c = \n<span class="subst">&#123;c&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;-----c[0] = ----\n <span class="subst">&#123;c[<span class="number">0</span>]&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;-----c[1] = ----\n <span class="subst">&#123;c[<span class="number">1</span>]&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>a = 
+[[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]
+ [12 13 14 15]]
+b = 
+[array([[0, 1, 2, 3],
+       [4, 5, 6, 7]]), array([[ 8,  9, 10, 11],
+       [12, 13, 14, 15]])]
+----b[0] = ----
+[[0 1 2 3]
+ [4 5 6 7]]
+-----b[1] = ----
+[[ 8  9 10 11]
+ [12 13 14 15]]
+c = 
+[array([[ 0,  1],
+       [ 4,  5],
+       [ 8,  9],
+       [12, 13]]), array([[ 2,  3],
+       [ 6,  7],
+       [10, 11],
+       [14, 15]])]
+-----c[0] = ----
+ [[ 0  1]
+ [ 4  5]
+ [ 8  9]
+ [12 13]]
+-----c[1] = ----
+ [[ 2  3]
+ [ 6  7]
+ [10 11]
+ [14 15]]
+</code></pre>
+<h1 id="一个矩阵的简单运算（元素求和）"><a href="#一个矩阵的简单运算（元素求和）" class="headerlink" title="一个矩阵的简单运算（元素求和）"></a>一个矩阵的简单运算（元素求和）</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">inport numpy <span class="keyword">as</span> np</span><br><span class="line">a = <span class="number">5</span>*np.random.random((<span class="number">2</span>,<span class="number">4</span>))</span><br><span class="line">a0 = np.floor(a)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;a0 = \n<span class="subst">&#123;a0&#125;</span>&quot;</span>)</span><br><span class="line">a0_sum = a0.<span class="built_in">sum</span>() <span class="comment">#使用内置方法对a所有元素进行求和</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;a0_sum = <span class="subst">&#123;a0_sum&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">c2 = np.<span class="built_in">sum</span>(a, axis = <span class="number">0</span>) </span><br><span class="line">c3 = np.<span class="built_in">sum</span>(a,axis = <span class="number">0</span>,keepdims = <span class="literal">True</span>) <span class="comment">#求和后保持维度 axis=0指按列轴作为</span></span><br><span class="line"><span class="comment">#基本操作单位</span></span><br></pre></td></tr></table></figure>
+
+<p>$$<br>\overset{axis &#x3D; 1}{\left[<br>    \begin{matrix}<br>        a_1 &amp; a_2 &amp; a_3 \<br>        a_4 &amp; a_5 &amp; a_6 \<br>        a_7 &amp; a_8 &amp; a_9<br>    \end{matrix}<br>    \right]}<br>$$</p>
+<h1 id="矩阵之间简单运算（加减乘除幂）"><a href="#矩阵之间简单运算（加减乘除幂）" class="headerlink" title="矩阵之间简单运算（加减乘除幂）"></a>矩阵之间简单运算（加减乘除幂）</h1><p>基本原理：先广播到同一个维度大小，然后各位置元素对应运算</p>
+<h1 id="矩阵之间线性代数运算-numpy-linalg模块"><a href="#矩阵之间线性代数运算-numpy-linalg模块" class="headerlink" title="矩阵之间线性代数运算 numpy.linalg模块"></a>矩阵之间线性代数运算 numpy.linalg模块</h1><h2 id="求范数"><a href="#求范数" class="headerlink" title="求范数"></a>求范数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment">#求矩阵中各个原子的范数</span></span><br><span class="line">a = np.array([[<span class="number">0</span>,<span class="number">3</span>,<span class="number">4</span>],[<span class="number">1</span>,<span class="number">6</span>,<span class="number">4</span>]])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;a = \n<span class="subst">&#123;a&#125;</span>&quot;</span>)</span><br><span class="line">b = np.linalg.norm(a,axis=<span class="number">0</span>) <span class="comment">#以0轴(理解为某个形状的运算器，只能按照这个顺序进行取数)进行求范数运算 </span></span><br><span class="line">b_keepdim = np.linalg.norm(a,axis=<span class="number">0</span>,keepdims = <span class="literal">True</span>) <span class="comment">#保留原矩阵结构 而不是成为 (3,)的没有矩阵结构的array 而是(1,3)的矩阵结构</span></span><br><span class="line">c = np.linalg.norm(a,axis=<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;b=\n<span class="subst">&#123;b&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;b_keepdim  = \n<span class="subst">&#123;b_keepdim&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;c = \n<span class="subst">&#123;c&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;b(保留四位有效数据,四舍五入) = \n <span class="subst">&#123;np.<span class="built_in">round</span>(b,<span class="number">4</span>)&#125;</span>&quot;</span>)  <span class="comment">#np.round()用于指定将数字四舍五入到几个小数</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>a = 
+[[0 3 4]
+ [1 6 4]]
+b=
+[1.         6.70820393 5.65685425]
+b_keepdim  = 
+[[1.         6.70820393 5.65685425]]
+c = 
+[5.         7.28010989]
+b(保留四位有效数据,四舍五入) = 
+ [1.     6.7082 5.6569]
+</code></pre>
+<h2 id="求线性方程组的唯一解"><a href="#求线性方程组的唯一解" class="headerlink" title="求线性方程组的唯一解"></a>求线性方程组的唯一解</h2><p>知识回顾：什么时候具有唯一解，什么时候没有唯一解<br>$$Ax&#x3D;b，b\neq 0，解的结构$$<br>$$取决于 R(A)与R(A|b)的关系  :$$<br>$1. R(A)&#x3D;R(A|b)&#x3D;r&lt;n(未知数个数) -&gt; 有无穷多个解 而且解空间由 n-r个向量张成$<br>$2. R(A)\neq R(A|b) -&gt; 无解$<br>$3. R(A)&#x3D;R(A|b)&#x3D;r &#x3D; n     -&gt;   只有唯一解 $</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">A = np.array([[<span class="number">3</span>,<span class="number">1</span>],[<span class="number">1</span>,<span class="number">2</span>]])</span><br><span class="line">b = np.array([[<span class="number">9</span>],[<span class="number">8</span>]])</span><br><span class="line"></span><br><span class="line">Ab = np.hstack([A,b])</span><br><span class="line">a_rank = np.linalg.matrix_rank(A)</span><br><span class="line">Ab_rank = np.linalg.matrix_rank(Ab) <span class="comment">#秩相等 说明可以求出唯一解</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;a_rank = <span class="subst">&#123;a_rank&#125;</span>,Ab_rank = <span class="subst">&#123;Ab_rank&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">x1 = np.linalg.solve(A,b) <span class="comment">#方法一 使用 solve方法 解决这个有唯一解的线性方程组</span></span><br><span class="line">x1_anotherway = np.linalg.inv(A)@b</span><br><span class="line"><span class="built_in">print</span>(x1)</span><br><span class="line"><span class="built_in">print</span>(x1_anotherway)</span><br></pre></td></tr></table></figure>
+
+<pre><code>a_rank = 2,Ab_rank = 2
+[[2.]
+ [3.]]
+[[2.]
+ [3.]]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">A = np.array([[<span class="number">3</span>,<span class="number">1</span>],[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">1</span>,<span class="number">1</span>]])</span><br><span class="line">b = np.array([[<span class="number">9</span>,<span class="number">8</span>,<span class="number">6</span>]]).T</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;A = \n<span class="subst">&#123;A&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;b = \n<span class="subst">&#123;b&#125;</span>&quot;</span>)</span><br><span class="line">Ab = np.hstack([A,b])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Ab = \n<span class="subst">&#123;Ab&#125;</span>&quot;</span>)</span><br><span class="line">A_rank = np.linalg.matrix_rank(A)</span><br><span class="line">Ab_rank = np.linalg.matrix_rank(Ab)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;A_rank = <span class="subst">&#123;A_rank&#125;</span>, Ab_rank = <span class="subst">&#123;Ab_rank&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#A_rank = 2, Ab_rank = 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用最小二乘解求解此线性方程组 == 求A的广义逆矩阵 然后与b做矩阵乘法@</span></span><br><span class="line">A_pinv = np.linalg.pinv(A)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;A_pinv = \n<span class="subst">&#123;A_pinv&#125;</span>&quot;</span>)</span><br><span class="line">x = np.linalg.pinv(A) @ b</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;x = \n<span class="subst">&#123;x&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>A = 
+[[3 1]
+ [1 2]
+ [1 1]]
+b = 
+[[9]
+ [8]
+ [6]]
+Ab = 
+[[3 1 9]
+ [1 2 8]
+ [1 1 6]]
+A_rank = 2, Ab_rank = 3
+A_pinv = 
+[[ 0.4        -0.2         0.        ]
+ [-0.23333333  0.53333333  0.16666667]]
+x = 
+[[2.        ]
+ [3.16666667]]
+</code></pre>
+<p>可以看出此时为R(A)&lt;R(A|b) 理论上来说是没有解的嘞，但是可以通过求最小二乘解的形式求出一个近似解</p>
+<h2 id="求特征值与特征向量"><a href="#求特征值与特征向量" class="headerlink" title="求特征值与特征向量"></a>求特征值与特征向量</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.eye(<span class="number">4</span>)</span><br><span class="line">b = np.rot90(a) <span class="comment">#顺时针?旋转90度</span></span><br><span class="line">c,d = np.linalg.eig(b) <span class="comment"># 特征值,特征向量</span></span><br><span class="line"><span class="built_in">print</span>(c)</span><br><span class="line"><span class="built_in">print</span>(d)</span><br></pre></td></tr></table></figure>
+
+<pre><code>[ 1. -1.  1. -1.]
+[[ 0.70710678  0.70710678  0.          0.        ]
+ [ 0.          0.          0.70710678 -0.70710678]
+ [ 0.          0.          0.70710678  0.70710678]
+ [ 0.70710678 -0.70710678 -0.          0.        ]]
+</code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lleostar.github.io">Leostar</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lleostar.github.io/post/ffca95d9.html">https://lleostar.github.io/post/ffca95d9.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lleostar.github.io" target="_blank">Leostar</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a><a class="post-meta__tags" href="/tags/Python%E5%B8%B8%E7%94%A8%E5%BA%93/">Python常用库</a></div><div class="post_share"><div class="social-share" data-image="/img/%E5%B8%85%E6%B0%94%E5%9B%BE%E7%89%87.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/post/de508a6.html"><img class="next-cover" src="/./img/hutao01.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">STM32学习之GPIO</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/%E7%9C%9F%E5%97%A3.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Leostar</div><div class="author-info__description">Leostar</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/lleostar"><i class="fab fa-github"></i><span>看看need</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">Hello 我是Leo 欢迎来到我的网站~ 点进文章后右下角的小标可以切换阅读模式哦</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E7%BB%84%E5%BA%8F%E5%88%97%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">创建数组序列的方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%B9%E6%95%B0%E7%BB%84%E5%A4%A7%E5%B0%8F%E4%BF%AE%E6%94%B9%EF%BC%8C%E4%BF%AE%E6%94%B9%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E4%B8%8E%E5%88%87%E7%89%87"><span class="toc-number">3.</span> <span class="toc-text">对数组大小修改，修改数组元素与切片</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%89%B9%E6%AE%8A%E7%9A%84%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">创建特殊的数组的方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E5%90%88%E5%B9%B6%E4%B8%8E%E5%88%86%E5%89%B2"><span class="toc-number">5.</span> <span class="toc-text">矩阵合并与分割</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E7%9F%A9%E9%98%B5%E7%9A%84%E7%AE%80%E5%8D%95%E8%BF%90%E7%AE%97%EF%BC%88%E5%85%83%E7%B4%A0%E6%B1%82%E5%92%8C%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">一个矩阵的简单运算（元素求和）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E4%B9%8B%E9%97%B4%E7%AE%80%E5%8D%95%E8%BF%90%E7%AE%97%EF%BC%88%E5%8A%A0%E5%87%8F%E4%B9%98%E9%99%A4%E5%B9%82%EF%BC%89"><span class="toc-number">7.</span> <span class="toc-text">矩阵之间简单运算（加减乘除幂）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E4%B9%8B%E9%97%B4%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E8%BF%90%E7%AE%97-numpy-linalg%E6%A8%A1%E5%9D%97"><span class="toc-number">8.</span> <span class="toc-text">矩阵之间线性代数运算 numpy.linalg模块</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%82%E8%8C%83%E6%95%B0"><span class="toc-number">8.1.</span> <span class="toc-text">求范数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%82%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84%E7%9A%84%E5%94%AF%E4%B8%80%E8%A7%A3"><span class="toc-number">8.2.</span> <span class="toc-text">求线性方程组的唯一解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%82%E7%89%B9%E5%BE%81%E5%80%BC%E4%B8%8E%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F"><span class="toc-number">8.3.</span> <span class="toc-text">求特征值与特征向量</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/ffca95d9.html" title="Numpy常见使用"><img src="/img/%E5%B8%85%E6%B0%94%E5%9B%BE%E7%89%87.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Numpy常见使用"/></a><div class="content"><a class="title" href="/post/ffca95d9.html" title="Numpy常见使用">Numpy常见使用</a><time datetime="2023-03-02T14:21:53.000Z" title="发表于 2023-03-02 22:21:53">2023-03-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/de508a6.html" title="STM32学习之GPIO"><img src="/./img/hutao01.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="STM32学习之GPIO"/></a><div class="content"><a class="title" href="/post/de508a6.html" title="STM32学习之GPIO">STM32学习之GPIO</a><time datetime="2023-03-01T14:37:12.000Z" title="发表于 2023-03-01 22:37:12">2023-03-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/2f4cbc2b.html" title="高中化学学习经验分享"><img src="/img/%E7%9C%9F%E5%97%A3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="高中化学学习经验分享"/></a><div class="content"><a class="title" href="/post/2f4cbc2b.html" title="高中化学学习经验分享">高中化学学习经验分享</a><time datetime="2022-11-17T03:12:40.000Z" title="发表于 2022-11-17 11:12:40">2022-11-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/fcb2be40.html" title="Leetcode学习01"><img src="/img/hutao01.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Leetcode学习01"/></a><div class="content"><a class="title" href="/post/fcb2be40.html" title="Leetcode学习01">Leetcode学习01</a><time datetime="2022-11-15T13:54:39.000Z" title="发表于 2022-11-15 21:54:39">2022-11-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/2a4a8916.html" title="Hexo使用过程中常见问题汇总"><img src="/img/%E9%87%8F%E4%BA%A7%E6%9C%BA.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo使用过程中常见问题汇总"/></a><div class="content"><a class="title" href="/post/2a4a8916.html" title="Hexo使用过程中常见问题汇总">Hexo使用过程中常见问题汇总</a><time datetime="2022-11-14T06:52:18.000Z" title="发表于 2022-11-14 14:52:18">2022-11-14</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/%E5%B8%85%E6%B0%94%E5%9B%BE%E7%89%87.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Leostar</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script></div></body></html>
